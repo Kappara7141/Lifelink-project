@@ -1,0 +1,75 @@
+﻿@model Donor.Models.DonorDetail
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>DonorDetail</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorAddress)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorEmail)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorMobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorMobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DonorGender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DonorGender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OrganName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OrganName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsHospitalAuthorized)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsHospitalAuthorized)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.DonorId }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

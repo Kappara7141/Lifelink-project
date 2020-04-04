@@ -1,0 +1,194 @@
+﻿@*@model IEnumerable<Donor.Models.DonorDetail>
+
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+
+    <h2>Index</h2>
+
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.DonorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonorAddress)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonorEmail)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonorMobile)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DonorGender)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.OrganName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsHospitalAuthorized)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonorAddress)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonorEmail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonorMobile)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DonorGender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrganName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsHospitalAuthorized)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id=item.DonorId}) |
+                @Html.ActionLink("Details", "Details", new { id=item.DonorId }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.DonorId })
+            </td>
+        </tr>
+    }
+
+    </table>*@
+
+
+@{
+    ViewBag.Title = "Donors List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<h2>Donors</h2>
+<a class='btn btn-primary btn-sm' href='@Url.Action("Index","CheckUps")'>CheckupUser</a>
+<table id="donortable" class="table table-bordered table-striped" style="width:100%">
+
+    <thead>
+        <tr>
+            <th>Donor Name</th>
+            <th>Donor Address</th>
+            <th>Donor Email</th>
+            <th>Donor Mobile</th>
+            <th>Donor Gender</th>
+            <th>Organ Name</th>
+            <th>IsHospitalAuthorized</th>
+            <th></th>
+        </tr>
+    </thead>
+
+</table>
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css" rel="stylesheet"/>
+<link href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css" rel="stylesheet"/>
+
+
+
+
+@section scripts{
+
+
+    @*<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js"></script>*@
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+
+    <script>
+        var Popup, dataTable;
+        $(document).ready(function () {
+
+            dataTable=  $("#donortable").DataTable({
+                "ajax": {
+                    "url": "/DonorDetails/GetData",
+                    "type": "GET",
+                    "datatype": "json",
+                },
+                "columns": [
+
+                    { "data": "DonorName" },
+                    { "data": "DonorAddress" },
+                    { "data": "DonorEmail" },
+                    { "data": "DonorMobile" },
+                    { "data": "DonorGender" },
+                    { "data": "OrganName" },
+                    { "data": "IsHospitalAuthorized" },
+                    {
+                      "data": "DonorId", "render": function (data) {
+
+                            return "<a class='btn btn-primary btn-sm' href='@Url.Action("Edit","DonorDetails")/" + data + "'><i class='fa fa-pencil'></i> Edit</a><a class='btn btn-danger btn-sm' style='margin-left:1px' onclick=Delete(" + data + ")><i class='fa fa-trash'></i> Delete</a>";
+
+                        },
+                        "orderable": false,
+                        "width":"150px"
+                    }
+                ],
+                "language": {
+
+                    "emptyTable":"No Data Found"
+                }
+
+            });
+            
+
+        });
+        //function PopupForm(url) {
+        //    var formDiv = $('<div/>');
+        //    $.get(url).done(function (response) {
+        //        formDiv.html(response);
+        //        Popup = formDiv.dialog({
+        //            //autoopen=true,
+        //            //resizable=false,
+        //            //title='eidt',
+        //            //height=500,
+        //            //width=700,
+        //            //close: function () {
+        //            //    popup.dialog('destroy').remove();
+        //            //}
+        //        });
+        //    });
+        //}
+
+        function Delete(id) {
+            if (confirm('Are you sure to Delete this Donor?')) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "DonorDetails")/' + id,
+                    success: function (data) {
+                        if (data.success) {
+                            dataTable.ajax.reload();
+                            $.notify("Deleted Successfully");
+                        }
+                    }
+
+                });
+            }
+        }
+
+       
+    </script>
+
+}

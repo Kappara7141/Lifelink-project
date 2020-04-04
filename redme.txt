@@ -1,0 +1,14 @@
+
+Execution Of Project
+
+1.Install Sql server Express 2014
+
+2.Install Visual studio 2019
+
+3.Copy the database file Donor.bak and paste it in backup folder of the SqlServer Express
+
+4.Now open the Sql Server Management studio connect to the server and right click on the data base anc choose restore than select the Donor.bak file from the backup folder and restore it.
+
+5.open the solution in the visual studio and then change the connection string in the webconfig file..
+
+The run the application

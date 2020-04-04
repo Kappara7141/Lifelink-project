@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Donor.Models.CheckUp>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>CheckUp Records</h2>
+<a class='btn btn-primary btn-sm' href='@Url.Action("Index","DonorDetails")'>Donors</a>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.City)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Hospital.HospitalName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hospital.HospitalName)
+            </td>
+            <td>
+                <a class='btn btn-primary btn-sm' onclick="SendEmail(@item.Id)">SendEmail</a>
+                @*<a class='btn btn-danger btn-sm' onclick="Delete(@item.Id)">Delete</a>*@
+            </td>
+        </tr>
+    }
+
+</table>
+
+@section scripts{
+
+    <script>
+         function SendEmail(id) {
+
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("SendEmail", "CheckUps")/' + id,
+                    success: function (data) {
+                        console.log("Email"+data.success);
+
+                    }
+
+                });
+
+        }
+        function Delete(id) {
+            if (confirm('Are you sure to Delete this Record?')) {
+                $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Delete", "CheckUps")/' + id,
+                    
+
+                });
+            }
+        }
+    </script>
+}
